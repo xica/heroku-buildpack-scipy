@@ -1,54 +1,32 @@
-Heroku buildpack: Python
-========================
+Heroku buildpack: Python, Numpy, Scipy, Scikit-learn
+====================================================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for Python apps, powered by [pip](http://www.pip-installer.org/).
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
+for Python apps, powered by [pip](http://www.pip-installer.org/).
 
-[![Build Status](https://secure.travis-ci.org/heroku/heroku-buildpack-python.png?branch=master)](http://travis-ci.org/heroku/heroku-buildpack-python)
+Additionally, it adds support for Numpy, Scipy and Scikit-learn.
 
-Usage
------
+[![Build Status](https://secure.travis-ci.org/dbrgn/heroku-buildpack-python-sklearn.png?branch=master)](http://travis-ci.org/dbrgn/heroku-buildpack-python-sklearn)
 
-Example usage:
+Differences to other forks
+--------------------------
 
-    $ ls
-    Procfile  requirements.txt  web.py
+This buildpack is strongly inspired by @wyn and @ToonTimbermont. In fact, I
+copied a lot of code from them. It also uses binaries provided by @wyn. Thanks
+a lot.
 
-    $ heroku create --stack cedar --buildpack git://github.com/heroku/heroku-buildpack-python.git
+In contrast to their forks, this buildpack does not require a `setup.py`, it
+works with a normal `requirements.txt` file. Additionally, it is based on the
+current version of the heroku-buildpack-python. This means that it uses a
+current version of pip, which gets rid of some stack traces in the deploy log.
 
-    $ git push heroku master
-    ...
-    -----> Fetching custom git buildpack... done
-    -----> Python app detected
-    -----> No runtime.txt provided; assuming python-2.7.3.
-    -----> Preparing Python runtime (python-2.7.3)
-    -----> Installing Distribute (0.6.34)
-    -----> Installing Pip (1.2.1)
-    -----> Installing dependencies using Pip (1.2.1)
-           Downloading/unpacking Flask==0.7.2 (from -r requirements.txt (line 1))
-           Downloading/unpacking Werkzeug>=0.6.1 (from Flask==0.7.2->-r requirements.txt (line 1))
-           Downloading/unpacking Jinja2>=2.4 (from Flask==0.7.2->-r requirements.txt (line 1))
-           Installing collected packages: Flask, Werkzeug, Jinja2
-           Successfully installed Flask Werkzeug Jinja2
-           Cleaning up...
+Setup, Usage
+------------
 
-You can also add it to upcoming builds of an existing application:
+Specify the buildpack as usual. For a new app:
 
-    $ heroku config:add BUILDPACK_URL=git://github.com/heroku/heroku-buildpack-python.git
+    heroku create --buildpack https://github.com/dbrgn/heroku-buildpack-python-sklearn/
 
-The buildpack will detect your app as Python if it has the file `requirements.txt` in the root. 
+For an existing app:
 
-It will use Pip to install your dependencies, vendoring a copy of the Python runtime into your slug. 
-
-Specify a Runtime
------------------
-
-You can also provide arbitrary releases Python with a `runtime.txt` file.
-
-    $ cat runtime.txt
-    python-3.3.0
-    
-Runtime options include:
-
-- python-2.7.4
-- python-3.3.1
-- pypy-1.9 (experimental)
+    heroku config:set BUILDPACK_URL=https://github.com/dbrgn/heroku-buildpack-python-sklearn/

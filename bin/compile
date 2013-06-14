@@ -154,6 +154,9 @@ hash -r
 # See [`bin/steps/pylibmc`](pylibmc.html).
 source $BIN_DIR/steps/pylibmc
 
+# Numpy/scipy support
+source $BIN_DIR/steps/numpy-scipy
+
 # Install Mercurial if it appears to be required.
 if (grep -Fiq "hg+" requirements.txt) then
   /app/.heroku/python/bin/pip install --use-mirrors mercurial | cleanup | indent
@@ -161,6 +164,11 @@ fi
 
 # Install dependencies with Pip.
 puts-step "Installing dependencies using Pip ($PIP_VERSION)"
+
+# Force scikit-learn to use a specific script
+source $BIN_DIR/steps/scikit-learn
+
+# Actually install requirements
 /app/.heroku/python/bin/pip install --use-mirrors -r requirements.txt --exists-action=w --src=./.heroku/src | cleanup | indent
 
 # Django collectstatic support.
