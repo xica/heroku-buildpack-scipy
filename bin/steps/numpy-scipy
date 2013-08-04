@@ -59,7 +59,7 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   # Move everything from venv directory to python directory
   if [ -d "venv" ]; then
     puts-step "Moving everything from venv directory to python directory..."
-    cp -a venv/ python/
+    cp -a venv/* python/
     rm -r venv
   fi
 
