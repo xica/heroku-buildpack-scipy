@@ -23,13 +23,14 @@ if (grep -iq -e "^\s*scikit-learn" requirements.txt) then
   if [ -d "python/lib/python2.7/site-packages/scikit-learn*" ]; then
     puts-step "Using cached scikit-learn."
   else
-    puts-step "Installing scikit-learn$TARGET_SKLEARN_VERSION via pip, but setting environment vars first."
+    puts-step "Setting environment vars..."
     export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
     export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
     export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
     export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/lib/atlas-base:$(pwd)/lib/atlas-base/atlas
     export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
+    puts-step "Installing scikit-learn$TARGET_SKLEARN_VERSION via pip"
     pip install --use-mirrors scikit-learn$TARGET_SKLEARN_VERSION
   fi
 
