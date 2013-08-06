@@ -59,7 +59,7 @@ export PATH=$BUILD_DIR/.heroku/python/bin:$PATH
 export PYTHONUNBUFFERED=1
 export LANG=en_US.UTF-8
 export LIBRARY_PATH=/app/.heroku/vendor/lib
-export LD_LIBRARY_PATH=/app/.heroku/vendor/lib
+export LD_LIBRARY_PATH=$LIBRARY_PATH
 
 # Switch to the repo's context.
 cd $BUILD_DIR
@@ -181,8 +181,8 @@ source $BIN_DIR/steps/collectstatic
 set-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-env PYTHONUNBUFFERED true
 set-env PYTHONHOME /app/.heroku/python
-set-default-env LIBRARY_PATH /app/.heroku/vendor/lib
-set-default-env LD_LIBRARY_PATH /app/.heroku/vendor/lib
+set-default-env LIBRARY_PATH $LIBRARY_PATH
+set-default-env LD_LIBRARY_PATH $LD_LIBRARY_PATH
 set-default-env LANG en_US.UTF-8
 set-default-env PYTHONHASHSEED random
 set-default-env PYTHONPATH /app/
