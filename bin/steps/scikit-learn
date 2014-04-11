@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script serves as the Skikit-learn build step of the
+# This script serves as the Scikit-learn build step of the
 # [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python) 
 # compiler. 
 # 
@@ -12,7 +12,7 @@
 # Syntax sugar.
 source $BIN_DIR/utils
 
-# If skikit-learn exists within requirements.txt then use binaries.
+# If Scikit-learn exists within requirements.txt then use binaries.
 if (grep -iq -e "^\s*scikit-learn" requirements.txt) then
   TARGET_SKLEARN_VERSION=$(cat requirements.txt | grep scikit-learn | tr -d " " | cut -c 13-)
   puts-step "Noticed scikit-learn. Installing..."
