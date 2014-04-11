@@ -18,7 +18,8 @@ Main Author of this Fork
 
 - Danilo Bargen (@dbrgn)
 
-Bugfixes, Features
-------------------
+Bugfixes, Features, Other Improvements
+--------------------------------------
 
 - Olivier Grisel (@ogrisel)
+- Sam Stites (@stites)
