@@ -41,18 +41,22 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
-  if [ -d "python/lib/python2.7/site-packages/numpy" ]; then
-    puts-step "Using cached numpy."
-  else
-    puts-step "Creating/downloading numpy bdist."
-    tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+  if (greq -iq "numpy" requirements.txt) then
+    if [ -d "python/lib/python2.7/site-packages/numpy" ]; then
+      puts-step "Using cached numpy."
+    else
+      puts-step "Creating/downloading numpy bdist."
+      tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+    fi
   fi
 
-  if [ -d "python/lib/python2.7/site-packages/scipy" ]; then
-    puts-step "Using cached scipy."
-  else
-    puts-step "Creating/downloading scipy bdist."
-    tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+  if (greq -iq "scipy" requirements.txt) then
+    if [ -d "python/lib/python2.7/site-packages/scipy" ]; then
+      puts-step "Using cached scipy."
+    else
+      puts-step "Creating/downloading scipy bdist."
+      tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+    fi
   fi
 
   # Move everything from venv directory to python directory
