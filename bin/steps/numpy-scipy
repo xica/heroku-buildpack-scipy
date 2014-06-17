@@ -30,65 +30,64 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
   if [[ (! -z $NUMPY_VERSION && $NUMPY_VERSION != $VENDORED_NUMPY_VERSION) || \
     (! -z $SCIPY_VERSION && $SCIPY_VERSION != $VENDORED_SCIPY_VERSION) ]]; then
     puts-step "This buildpack only supports NumPy $VENDORED_NUMPY_VERSION and SciPy $VENDORED_SCIPY_VERSION."
-    exit 0
-  fi
-
-  puts-step "Detected numpy/scipy in requirements.txt. Downloading prebuilt binaries."
-  cd .heroku
-  git clone --quiet ${VENDORED_GIT_REPO}
-
-  # set BLAS/LAPACK/ATLAS
-  if [ -d "vendor/lib/atlas-base" ]; then
-    puts-step "Using cached binaries."
   else
-    puts-step "Downloading BLAS/LAPACK/ATLAS/Fortran binaries."
-    # Download and extract everything into target vendor directory.
-    tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
-  fi
-  export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
-  export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
-  export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
-  export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
-  export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
+    puts-step "Detected numpy/scipy in requirements.txt. Downloading prebuilt binaries."
+    cd .heroku
+    git clone --quiet ${VENDORED_GIT_REPO}
 
-  if (grep -iq "numpy" $REQ_TXT) then
-    NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
-    if [ $NUMPY_VERSION != $VENDORED_NUMPY_VERSION ]; then
-      puts-step "NumPy $NUMPY_VERSION requested. This buildpack only supports NumPy $VENDORED_NUMPY_VERSION"
-    elif [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
-      puts-step "Copying compiled NumPy 1.8.1."
-      tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+    # set BLAS/LAPACK/ATLAS
+    if [ -d "vendor/lib/atlas-base" ]; then
+      puts-step "Using cached binaries."
     else
-      INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f2)
-      puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) detected. Removing."
-      rm -rf python/lib/python2.7/site-packages/numpy*
-      tar xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+      puts-step "Downloading BLAS/LAPACK/ATLAS/Fortran binaries."
+      # Download and extract everything into target vendor directory.
+      tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
     fi
-  fi
+    export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
+    export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
+    export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
+    export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
+    export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
-  if (grep -iq "scipy" $REQ_TXT) then
-    SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
-    if [ $SCIPY_VERSION != $VENDORED_SCIPY_VERSION ]; then
-      puts-step "SciPy $SCIPY_VERSION requested. This buildpack only supports SciPy $VENDORED_SCIPY_VERSION"
-    elif [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
-      puts-step "Copying compiled SciPy 1.8.1."
-      tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
-    else
-      INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f2)
-      puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) detected. Removing."
-      rm -rf python/lib/python2.7/site-packages/scipy*
-      tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+    if (grep -iq "numpy" $REQ_TXT) then
+      NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
+      if [ $NUMPY_VERSION != $VENDORED_NUMPY_VERSION ]; then
+        puts-step "NumPy $NUMPY_VERSION requested. This buildpack only supports NumPy $VENDORED_NUMPY_VERSION"
+      elif [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
+        puts-step "Copying compiled NumPy 1.8.1."
+        tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+      else
+        INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f2)
+        puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) detected. Removing."
+        rm -rf python/lib/python2.7/site-packages/numpy*
+        tar xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+      fi
     fi
-  fi
 
-  # Move everything from venv directory to python directory
-  if [ -d "venv" ]; then
-    cp -a venv/* python/
-    rm -r venv
-  fi
+    if (grep -iq "scipy" $REQ_TXT) then
+      SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
+      if [ $SCIPY_VERSION != $VENDORED_SCIPY_VERSION ]; then
+        puts-step "SciPy $SCIPY_VERSION requested. This buildpack only supports SciPy $VENDORED_SCIPY_VERSION"
+      elif [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
+        puts-step "Copying compiled SciPy 1.8.1."
+        tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+      else
+        INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f2)
+        puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) detected. Removing."
+        rm -rf python/lib/python2.7/site-packages/scipy*
+        tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+      fi
+    fi
 
-  if [ -d ${VENDORED_GIT_NAME} ]; then
-    rm -rf ${VENDORED_GIT_NAME}
+    # Move everything from venv directory to python directory
+    if [ -d "venv" ]; then
+      cp -a venv/* python/
+      rm -r venv
+    fi
+
+    if [ -d ${VENDORED_GIT_NAME} ]; then
+      rm -rf ${VENDORED_GIT_NAME}
+    fi
+    cd ..
   fi
-  cd ..
 fi
