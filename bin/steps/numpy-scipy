@@ -50,7 +50,7 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
       puts-step "Copying compiled NumPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
     else
-      INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f2)
+      INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f3)
       if [ "$INSTALLED_NUMPY_VERSION" == "$VENDORED_NUMPY_VERSION" ]; then
         puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) package detected."
       else
@@ -70,7 +70,7 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
       puts-step "Copying compiled SciPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
     else
-      INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f2)
+      INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f3)
       if [ "$INSTALLED_SCIPY_VERSION" == "$VENDORED_SCIPY_VERSION" ]; then
         puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) package detected."
       else
