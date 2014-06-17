@@ -1,10 +1,13 @@
-Heroku buildpack: Python, Numpy, Scipy, Scikit-learn
+Heroku buildpack: Python, Numpy, and Scipy
 ====================================================
 
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
 for Python apps, powered by [pip](http://www.pip-installer.org/).
 
-This custom buildpack supports NumPy 1.8.1 and SciPy 0.14.0 installations.
+This custom buildpack currently supports only NumPy 1.8.1 and SciPy 0.14.0
+installations.
+
+Please open a GitHub for any problems encountered or feature requests.
 
 Differences to other forks
 --------------------------
