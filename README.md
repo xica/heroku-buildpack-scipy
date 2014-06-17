@@ -29,6 +29,9 @@ This buildpack is currently very simple in that it will install *only* these
 versions, even if you specify a different version in requirements.txt. This
 can be improved in the future if there is enough interest.
 
+This package will also install compiled runtime libraries for BLAS, LAPACK,
+ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
+
 If you desire older NumPy or SciPy packages, please take a look at
 https://github.com/dbrgn/heroku-buildpack-python-sklearn
 
