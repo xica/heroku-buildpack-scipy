@@ -9,21 +9,10 @@ installations.
 
 Please open a GitHub for any problems encountered or feature requests.
 
-Differences to other forks
---------------------------
+Details
+-------
 
-This fork is taken from @dbrgn -- I owe thanks to him, @wyn, and others for
-setting up a lot of the code here.
-
-In contrast to other forks, this buildpack does not require a `setup.py`, it
-works with a normal `requirements.txt` file. Additionally, it is based on the
-current version of the heroku-buildpack-python. This means that it uses a
-current version of pip, which gets rid of some stack traces in the deploy log.
-
-Setup, Usage
-------------
-
-NOTE: This buildpack only supports:
+This buildpack only supports:
 
 - NumPy 1.8.1
 - SciPy 0.14.0
@@ -34,7 +23,9 @@ ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
 If you desire older NumPy or SciPy packages, please take a look at
 https://github.com/dbrgn/heroku-buildpack-python-sklearn
 
-Then specify the buildpack as usual. For a new app:
+Usage
+-----
+For a new app:
 
     heroku create --buildpack https://github.com/thenovices/heroku-buildpack-scipy
 
@@ -53,3 +44,10 @@ Demo
     $ git add requirements.txt
     $ git commit -m 'Added requirements'
     $ git push heroku master
+
+
+Acknowledgments
+---------------
+
+This fork is taken from @dbrgn -- I owe thanks to him, @wyn, and others for
+setting up a lot of the code here.
