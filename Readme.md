@@ -12,7 +12,7 @@ Differences to other forks
 This fork is taken from @dbrgn -- I owe thanks to him, @wyn, and others for
 setting up a lot of the code here.
 
-In contrast to their forks, this buildpack does not require a `setup.py`, it
+In contrast to other forks, this buildpack does not require a `setup.py`, it
 works with a normal `requirements.txt` file. Additionally, it is based on the
 current version of the heroku-buildpack-python. This means that it uses a
 current version of pip, which gets rid of some stack traces in the deploy log.
@@ -20,10 +20,14 @@ current version of pip, which gets rid of some stack traces in the deploy log.
 Setup, Usage
 ------------
 
-This buildpack only supports:
+NOTE: This buildpack only supports:
 
-- Numpy 1.8.1
-- Scipy 0.14.0
+- NumPy 1.8.1
+- SciPy 0.14.0
+
+This buildpack is currently very simple in that it will install *only* these
+versions, even if you specify a different version in requirements.txt. This
+can be improved in the future if there is enough interest.
 
 If you desire older NumPy or SciPy packages, please take a look at
 https://github.com/dbrgn/heroku-buildpack-python-sklearn
