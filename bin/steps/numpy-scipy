@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# For temporary debugging
+set -x
+
 # This script serves as the Scipy/Numpy build step of the
 # [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python) 
 # compiler. 
@@ -27,8 +30,7 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
   # Check if the version is right first.
   NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
   SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
-  if [[ (! -z $NUMPY_VERSION && $NUMPY_VERSION != $VENDORED_NUMPY_VERSION) || \
-    (! -z $SCIPY_VERSION && $SCIPY_VERSION != $VENDORED_SCIPY_VERSION) ]]; then
+  if [[ (! -z $NUMPY_VERSION && $NUMPY_VERSION != $VENDORED_NUMPY_VERSION) || (! -z $SCIPY_VERSION && $SCIPY_VERSION != $VENDORED_SCIPY_VERSION) ]]; then
     puts-step "This buildpack only supports NumPy $VENDORED_NUMPY_VERSION and SciPy $VENDORED_SCIPY_VERSION."
   else
     puts-step "Detected numpy/scipy in requirements.txt. Downloading prebuilt binaries."
@@ -50,7 +52,6 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
     export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
     if (grep -iq "numpy" $REQ_TXT) then
-      NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
       if [ $NUMPY_VERSION != $VENDORED_NUMPY_VERSION ]; then
         puts-step "NumPy $NUMPY_VERSION requested. This buildpack only supports NumPy $VENDORED_NUMPY_VERSION"
       elif [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
@@ -65,7 +66,6 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
     fi
 
     if (grep -iq "scipy" $REQ_TXT) then
-      SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
       if [ $SCIPY_VERSION != $VENDORED_SCIPY_VERSION ]; then
         puts-step "SciPy $SCIPY_VERSION requested. This buildpack only supports SciPy $VENDORED_SCIPY_VERSION"
       elif [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
