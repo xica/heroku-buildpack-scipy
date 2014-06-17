@@ -76,7 +76,7 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
       else
         puts-step "Removing old SciPy ($INSTALLED_SCIPY_VERSION) package."
         rm -rf python/lib/python2.7/site-packages/scipy*
-        puts-step "Instaling new SciPy ($VENDORED_SCIPY_VERSION) package."
+        puts-step "Installing new SciPy ($VENDORED_SCIPY_VERSION) package."
         tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
       fi
     fi
