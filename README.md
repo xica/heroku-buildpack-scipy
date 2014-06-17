@@ -28,10 +28,6 @@ NOTE: This buildpack only supports:
 - NumPy 1.8.1
 - SciPy 0.14.0
 
-This buildpack is currently very simple in that it will install *only* these
-versions, even if you specify a different version in requirements.txt. This
-can be improved in the future if there is enough interest.
-
 This package will also install compiled runtime libraries for BLAS, LAPACK,
 ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
 
