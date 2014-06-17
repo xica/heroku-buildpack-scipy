@@ -28,8 +28,8 @@ source $BIN_DIR/utils
 # If numpy or scipy exists within requirements.txt then use binaries.
 if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
   # Check if the version is right first.
-  NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
-  SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
+  NUMPY_VERSION="$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)"
+  SCIPY_VERSION="$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)"
   if [[ ( ! -z $NUMPY_VERSION && $NUMPY_VERSION != $VENDORED_NUMPY_VERSION ) || ( ! -z $SCIPY_VERSION && $SCIPY_VERSION != $VENDORED_SCIPY_VERSION ) ]]; then
     puts-step "This buildpack only supports NumPy $VENDORED_NUMPY_VERSION and SciPy $VENDORED_SCIPY_VERSION."
   else
