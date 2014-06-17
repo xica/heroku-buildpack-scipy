@@ -46,13 +46,14 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
   if (grep -iq "numpy" $REQ_TXT) then
-    if [ $NUMPY_VERSION != $VENDORED_NUMPY_VERSION ]; then
+    NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
+    if [ "$NUMPY_VERSION" != "$VENDORED_NUMPY_VERSION" ]; then
       puts-step "NumPy $NUMPY_VERSION requested. This buildpack only supports NumPy $VENDORED_NUMPY_VERSION"
     elif [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
       puts-step "Copying compiled NumPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
     else
-      INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f3)
+      INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f2)
       puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) detected. Removing."
       rm -rf python/lib/python2.7/site-packages/numpy*
       tar xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
@@ -60,13 +61,14 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
   fi
 
   if (grep -iq "scipy" $REQ_TXT) then
-    if [ $SCIPY_VERSION != $VENDORED_SCIPY_VERSION ]; then
+    SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
+    if [ "$SCIPY_VERSION" != "$VENDORED_SCIPY_VERSION" ]; then
       puts-step "SciPy $SCIPY_VERSION requested. This buildpack only supports SciPy $VENDORED_SCIPY_VERSION"
     elif [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
       puts-step "Copying compiled SciPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
     else
-      INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f3)
+      INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f2)
       puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) detected. Removing."
       rm -rf python/lib/python2.7/site-packages/scipy*
       tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
