@@ -21,7 +21,7 @@ source $BIN_DIR/utils
 
 # If numpy or scipy exists within requirements.txt then use binaries.
 if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
-  puts-step "Detected numpy/scipy in requirements.txt. Bootstrapping prebuilt binaries."
+  puts-step "Detected numpy/scipy in requirements.txt. Downloading prebuilt binaries."
   cd .heroku
 
   git clone --quiet ${VENDORED_GIT_REPO}
@@ -31,7 +31,7 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   if [ -d "vendor/lib/atlas-base" ]; then
     puts-step "Using cached binaries."
   else
-    puts-step "Creating/downloading binaries."
+    puts-step "Downloading BLAS/LAPACK/ATLAS/Fortran binaries."
     # Download and extract everything into target vendor directory.
     tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
   fi
@@ -42,26 +42,21 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
   if (grep -iq "numpy" ../requirements.txt) then
-    if [ -d "python/lib/python2.7/site-packages/numpy" ]; then
-      puts-step "Using cached numpy."
-    else
-      puts-step "Creating/downloading numpy bdist."
+    if [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
+      puts-step "Copying compiled NumPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
     fi
   fi
 
   if (grep -iq "scipy" ../requirements.txt) then
-    if [ -d "python/lib/python2.7/site-packages/scipy" ]; then
-      puts-step "Using cached scipy."
-    else
-      puts-step "Creating/downloading scipy bdist."
+    if [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
+      puts-step "Copying compiled SciPy 0.14.0."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
     fi
   fi
 
   # Move everything from venv directory to python directory
   if [ -d "venv" ]; then
-    puts-step "Moving everything from venv directory to python directory..."
     cp -a venv/* python/
     rm -r venv
   fi
