@@ -41,7 +41,7 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
-  if (grep -iq "numpy" requirements.txt) then
+  if (grep -iq "numpy" ../requirements.txt) then
     if [ -d "python/lib/python2.7/site-packages/numpy" ]; then
       puts-step "Using cached numpy."
     else
@@ -50,7 +50,7 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
     fi
   fi
 
-  if (grep -iq "scipy" requirements.txt) then
+  if (grep -iq "scipy" ../requirements.txt) then
     if [ -d "python/lib/python2.7/site-packages/scipy" ]; then
       puts-step "Using cached scipy."
     else
