@@ -26,20 +26,20 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
 
   git clone --quiet ${VENDORED_GIT_REPO}
 
-  ## check whether this has happened already
-  ## set BLAS/LAPACK/ATLAS
-  # if [ -d "vendor/lib/atlas-base" ]; then
-    # puts-step "Using cached binaries."
-  # else
-    # puts-step "Creating/downloading binaries."
-    # # Download and extract everything into target vendor directory.
-    # tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
-  # fi
-  # export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
-  # export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
-  # export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
-  # export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
-  # export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
+  # check whether this has happened already
+  # set BLAS/LAPACK/ATLAS
+  if [ -d "vendor/lib/atlas-base" ]; then
+    puts-step "Using cached binaries."
+  else
+    puts-step "Creating/downloading binaries."
+    # Download and extract everything into target vendor directory.
+    tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
+  fi
+  export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
+  export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
+  export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
+  export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
+  export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
   if [ -d "python/lib/python2.7/site-packages/numpy" ]; then
     puts-step "Using cached numpy."
