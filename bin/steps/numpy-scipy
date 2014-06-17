@@ -24,6 +24,8 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   puts-step "Detected numpy/scipy in requirements.txt. Bootstrapping prebuilt binaries."
   cd .heroku
 
+  git clone --quiet ${VENDORED_GIT_REPO}
+
   ## check whether this has happened already
   ## set BLAS/LAPACK/ATLAS
   # if [ -d "vendor/lib/atlas-base" ]; then
@@ -31,7 +33,6 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   # else
     # puts-step "Creating/downloading binaries."
     # # Download and extract everything into target vendor directory.
-    # git clone ${VENDORED_GIT_REPO} > /dev/null
     # tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
   # fi
   # export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
