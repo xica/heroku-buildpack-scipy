@@ -7,6 +7,7 @@ Inspiration / Base Code
 - Heroku guys (heroku-buildpack-python)
 - wyn (@wyn)
 - Toon Timbermont (@ToonTimbermont)
+- Danilo Bargen (@dbrgn)
 
 Precompiled Binaries
 --------------------
@@ -16,7 +17,7 @@ Precompiled Binaries
 Main Author of this Fork
 ------------------------
 
-- Danilo Bargen (@dbrgn)
+- Brandon Liu (@thenovices)
 
 Bugfixes, Features, Other Improvements
 --------------------------------------
