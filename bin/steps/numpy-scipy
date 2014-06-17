@@ -13,14 +13,17 @@ VENDORED_GIT_NAME="npscipy-binaries"
 VENDORED_GIT_REPO="git://github.com/thenovices/${VENDORED_GIT_NAME}.git"
 # The location of the pre-compiled atlas/lapack/blas/gfortran binaries.
 VENDORED_BINARIES="npscipy"
+VENDORED_NUMPY_VERSION="1.8.1"
 VENDORED_NUMPY="numpy-1.8.1"
+VENDORED_SCIPY_VERSION="0.14.0"
 VENDORED_SCIPY="scipy-0.14.0"
+REQ_TXT=$(pwd)/requirements.txt
 
 # Syntax sugar.
 source $BIN_DIR/utils
 
 # If numpy or scipy exists within requirements.txt then use binaries.
-if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
+if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
   puts-step "Detected numpy/scipy in requirements.txt. Downloading prebuilt binaries."
   cd .heroku
 
@@ -41,17 +44,33 @@ if (grep -iq -e "numpy" -e "scipy" requirements.txt) then
   export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
   export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
-  if (grep -iq "numpy" ../requirements.txt) then
-    if [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
+  if (grep -iq "numpy" $REQ_TXT) then
+    NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
+    if [ $NUMPY_VERSION != $VENDORED_NUMPY_VERSION ]; then
+      puts-step "NumPy $NUMPY_VERSION requested. This buildpack only supported NumPy $VENDORED_NUMPY_VERSION"
+    elif [ ! -d "python/lib/python2.7/site-packages/numpy" ]; then
       puts-step "Copying compiled NumPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+    else
+      INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f2)
+      puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) detected. Removing."
+      rm -rf python/lib/python2.7/site-packages/numpy*
+      tar xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
     fi
   fi
 
-  if (grep -iq "scipy" ../requirements.txt) then
-    if [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
-      puts-step "Copying compiled SciPy 0.14.0."
+  if (grep -iq "scipy" $REQ_TXT) then
+    SCIPY_VERSION=$(grep -i "scipy" $REQ_TXT | cut -d'=' -f3)
+    if [ $SCIPY_VERSION != $VENDORED_SCIPY_VERSION ]; then
+      puts-step "SciPy $SCIPY_VERSION requested. This buildpack only supported SciPy $VENDORED_SCIPY_VERSION"
+    elif [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
+      puts-step "Copying compiled SciPy 1.8.1."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+    else
+      INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f2)
+      puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) detected. Removing."
+      rm -rf python/lib/python2.7/site-packages/scipy*
+      tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
     fi
   fi
 
