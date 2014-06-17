@@ -51,9 +51,14 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
     else
       INSTALLED_NUMPY_VERSION=$(find python/lib/python2.7/site-packages -name "numpy-*" | cut -d'-' -f2)
-      puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) detected. Removing."
-      rm -rf python/lib/python2.7/site-packages/numpy*
-      tar xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+      if [ "$INSTALLED_NUMPY_VERSION" == "$VENDORED_NUMPY_VERSION" ]; then
+        puts-step "Existing NumPy ($INSTALLED_NUMPY_VERSION) package detected."
+      else
+        puts-step "Removing old NumPy ($INSTALLED_NUMPY_VERSION) package."
+        rm -rf python/lib/python2.7/site-packages/numpy*
+        puts-step "Installing new NumPy ($VENDORED_NUMPY_VERSION) package."
+        tar xzf ${VENDORED_GIT_NAME}/${VENDORED_NUMPY}.tar.gz
+      fi
     fi
   fi
 
@@ -66,9 +71,14 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
     else
       INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f2)
-      puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) detected. Removing."
-      rm -rf python/lib/python2.7/site-packages/scipy*
-      tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+      if [ "$INSTALLED_SCIPY_VERSION" == "$VENDORED_SCIPY_VERSION" ]; then
+        puts-step "Existing SciPy ($INSTALLED_SCIPY_VERSION) package detected."
+      else
+        puts-step "Removing old SciPy ($INSTALLED_NUMPY_VERSION) package."
+        rm -rf python/lib/python2.7/site-packages/scipy*
+        puts-step "Instaling new SciPy ($VENDORED_SCIPY_VERSION) package."
+        tar xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
+      fi
     fi
   fi
 
