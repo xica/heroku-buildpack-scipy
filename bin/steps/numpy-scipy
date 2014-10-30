@@ -67,7 +67,7 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
     if [ "$SCIPY_VERSION" != "$VENDORED_SCIPY_VERSION" ]; then
       puts-step "SciPy $SCIPY_VERSION requested. This buildpack only supports SciPy $VENDORED_SCIPY_VERSION"
     elif [ ! -d "python/lib/python2.7/site-packages/scipy" ]; then
-      puts-step "Copying compiled SciPy 1.8.1."
+      puts-step "Copying compiled SciPy 0.14.0."
       tar -xzf ${VENDORED_GIT_NAME}/${VENDORED_SCIPY}.tar.gz
     else
       INSTALLED_SCIPY_VERSION=$(find python/lib/python2.7/site-packages -name "scipy-*" | cut -d'-' -f3)
