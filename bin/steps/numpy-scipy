@@ -36,11 +36,11 @@ if (grep -iq -e "numpy" -e "scipy" $REQ_TXT) then
     # Download and extract everything into target vendor directory.
     tar -xvf ${VENDORED_GIT_NAME}/${VENDORED_BINARIES}.tar.gz > /dev/null
   fi
-  export BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
-  export LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
-  export ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
-  export LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
-  export LD_LIBRARY_PATH=$(pwd)/vendor/lib:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
+  set-env BLAS=$(pwd)/vendor/lib/atlas-base/atlas/libblas.a
+  set-env LAPACK=$(pwd)/vendor/lib/atlas-base/atlas/liblapack.a
+  set-env ATLAS=$(pwd)/vendor/lib/atlas-base/libatlas.a
+  set-env LIBRARY_PATH=$LIBRARY_PATH:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
+  set-env LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/vendor/lib/atlas-base:$(pwd)/vendor/lib/atlas-base/atlas
 
   if (grep -iq "numpy" $REQ_TXT) then
     NUMPY_VERSION=$(grep -i "numpy" $REQ_TXT | cut -d'=' -f3)
