@@ -46,6 +46,7 @@ function install_prebuilt {
   # If no version is specified, the default version is used (last version in the array passed).
   if [[ $(pip-grep --silent --print-req $REQ_TXT $pkg) == "$pkg" ]]; then
     install_version=${versions[${#versions[@]} - 1]}
+    puts-step "No version specified for $pkg. Using $install_version."
   else
     for version in "${versions[@]}"; do
       if [[ $(pip-grep --silent --print-req $REQ_TXT $pkg) == "${pkg}==${version}" ]]; then
