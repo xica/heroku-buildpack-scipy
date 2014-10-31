@@ -31,6 +31,8 @@ ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
 
 It appears that SciPy does not work with a NumPy that is a different version
 from what it was compiled against. I will fix this in the near future.
+If this is something that you want to see, let me know by adding a GitHub
+issue so that I can prioritize it.
 
 Usage
 -----
