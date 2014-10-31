@@ -16,7 +16,10 @@ Details
 This buildpack currently supports:
 
 NumPy:
+  * 1.6.2
+  * 1.7.2
   * 1.8.1
+  * 1.8.2
   * 1.9.0
 
 SciPy:
