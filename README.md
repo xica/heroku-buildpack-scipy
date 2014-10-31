@@ -23,10 +23,15 @@ NumPy:
   * 1.9.0
 
 SciPy:
-  * 0.14.0
+  * 0.14.0 (compiled against 1.8.1)
 
 This package will also install compiled runtime libraries for BLAS, LAPACK,
 ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
+
+I currently am not sure whether it is okay to use a SciPy installation that
+was compiled against a version of NumPy different from the one available at
+runtime. If this turns out to be an issue, please open a GitHub issue and I
+will address it.
 
 Usage
 -----
