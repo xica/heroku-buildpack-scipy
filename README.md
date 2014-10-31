@@ -1,29 +1,29 @@
 Heroku buildpack: Python, Numpy, and Scipy
 ====================================================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
-for Python apps, powered by [pip](http://www.pip-installer.org/).
+This is a custom [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
+for Python apps that use NumPy and/or SciPy, powered by [pip](http://www.pip-installer.org/).
 
-This custom buildpack currently supports only NumPy 1.8.1 and SciPy 0.14.0
-installations.
-
-Please open a GitHub for any problems encountered or feature requests. If you
-are interested in seeing a write-up/tutorial for creating this custom
-buildpack, please let me know in a GitHub issue.
+Please open a GitHub for any problems encountered or feature requests.
+If are using this project and found it useful, please let me know! (Preferably
+by email: brandon.k.liu@gmail.com). I maintain this project on my spare time,
+and I am much more motivated to work on it if I know there are people who are
+benefiting.
 
 Details
 -------
 
-This buildpack only supports:
+This buildpack currently supports:
 
-- NumPy 1.8.1
-- SciPy 0.14.0
+NumPy:
+  * 1.8.1
+  * 1.9.0
+
+SciPy:
+  * 0.14.0
 
 This package will also install compiled runtime libraries for BLAS, LAPACK,
 ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
-
-If you desire older NumPy or SciPy packages, please take a look at
-https://github.com/dbrgn/heroku-buildpack-python-sklearn
 
 Usage
 -----
