@@ -28,6 +28,7 @@ puts-warn() {
 
 # Usage: $ set-env key value
 set-env() {
+  export "$1=$(eval echo $2)
   echo "export $1=$2" >> $PROFILE_PATH
 }
 
