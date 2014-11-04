@@ -29,10 +29,18 @@ SciPy:
 This package will also install compiled runtime libraries for BLAS, LAPACK,
 ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
 
-It appears that SciPy does not work with a NumPy that is a different version
-from what it was compiled against. I will fix this in the near future.
-If this is something that you want to see, let me know by adding a GitHub
-issue so that I can prioritize it.
+### Known Issues and Todos
+
+  1. Currently, SciPy will only work with the specific version of NumPy
+     against which it was compiled (e.g., SciPy 0.14.0 with NumPy 1.8.1).
+  2. Scikit-learn can be installed, but in one test, scikit-learn 0.14.1
+     installed with NumPy 1.9.0 and SciPy 0.13.3 did not pass all tests. You
+     can see the failed tests in [this issue][issue9].
+
+[issue9]: https://github.com/thenovices/heroku-buildpack-scipy/issues/9#issuecomment-61660727
+
+If any of these issues are immediately impacting you, please open a Github
+issue so that I know that they are higher priority items.
 
 Usage
 -----
