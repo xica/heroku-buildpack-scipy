@@ -33,9 +33,9 @@ ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
 
   1. Currently, SciPy will only work with the specific version of NumPy
      against which it was compiled (e.g., SciPy 0.14.0 with NumPy 1.8.1).
-  2. Scikit-learn can be installed, but in one test, scikit-learn 0.14.1
-     installed with NumPy 1.9.0 and SciPy 0.13.3 did not pass all tests. You
-     can see the failed tests in [this issue][issue9].
+  2. Scikit-learn can be installed, but may not pass all tests. For example,
+     scikit-learn 0.14.1 installed with NumPy 1.9.0 and SciPy 0.13.3 did not
+     pass all tests. You can see the failed tests in [this issue][issue9].
 
 [issue9]: https://github.com/thenovices/heroku-buildpack-scipy/issues/9#issuecomment-61660727
 
