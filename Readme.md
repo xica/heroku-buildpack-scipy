@@ -1,4 +1,12 @@
 Heroku buildpack: Python, Numpy, and Scipy (Python 2.7 only)
+=======
+Caution
+=======
+
+XICA specific work around is added on this version.
+
+
+Heroku buildpack: Python, Numpy, and Scipy
 ====================================================
 
 This is a custom [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
