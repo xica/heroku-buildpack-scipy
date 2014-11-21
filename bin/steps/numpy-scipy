@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # This script serves as the NumPy and SciPy build step of the
-# [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python) 
-# compiler. 
-# 
-# A [buildpack](http://devcenter.heroku.com/articles/buildpacks) is an 
+# [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python)
+# compiler.
+#
+# A [buildpack](http://devcenter.heroku.com/articles/buildpacks) is an
 # adapter between a Python application and Heroku's runtime.
 #
 # This script is invoked by [`bin/compile`](/).
@@ -84,7 +84,9 @@ function install_prebuilt {
   rm -rf venv "${name}.tar.gz"
 }
 
-REQ_TXT=$(pwd)/requirements.txt
+# Work around for XICA internal reason
+# REQ_TXT=$(pwd)/requirements.txt
+REQ_TXT=$(pwd)/pypi_requirements.txt
 NUMPY_VERSIONS=(1.6.2 1.7.2 1.8.1 1.8.2 1.9.0)
 SCIPY_VERSIONS=(0.13.3 0.14.0)
 
