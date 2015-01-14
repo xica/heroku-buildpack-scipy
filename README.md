@@ -25,6 +25,7 @@ NumPy:
   * 1.8.1
   * 1.8.2
   * 1.9.0
+  * 1.9.1
 
 SciPy:
   * 0.13.3 (compiled against NumPy 1.9.0)
