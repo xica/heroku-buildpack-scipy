@@ -42,8 +42,10 @@ ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
      scikit-learn 0.14.1 installed with NumPy 1.9.0 and SciPy 0.13.3 did not
      pass all tests. You can see the failed tests in [this issue][issue9].
   3. The cedar-14 stack is not supported.
+  4. This buildpack may not work well with Multipacks (e.g., see [this issue][issue15]).
 
 [issue9]: https://github.com/thenovices/heroku-buildpack-scipy/issues/9#issuecomment-61660727
+[issue15]: https://github.com/thenovices/heroku-buildpack-scipy/issues/15
 
 If any of these issues are immediately impacting you, please open a Github
 issue so that I know that they are higher priority items.
