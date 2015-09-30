@@ -1,4 +1,4 @@
-Heroku buildpack: Python, Numpy, and Scipy
+Heroku buildpack: Python, Numpy, and Scipy (Python 2.7 only)
 ====================================================
 
 This is a custom [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks)
@@ -50,6 +50,9 @@ ATLAS, and Fortran, which are needed by NumPy and SciPy at runtime.
   3. I was getting some minor test failures for NumPy 1.9.2 that I wasn't able
      to resolve. See more information [here][issue19]. Please contact me if
      you have a problem related to this.
+  4. This buildpack currently only works for Python 2.7. Support for Python 3.4
+     will come whenever I have some free time to work on it (or if there is a
+     pull request).
 
 [issue9]: https://github.com/thenovices/heroku-buildpack-scipy/issues/9#issuecomment-61660727
 [issue11]: https://github.com/thenovices/heroku-buildpack-scipy/issues/11#issuecomment-85143132
